@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="420" viewBox="0 0 700 420" font-family="Inter, Arial, sans-serif">
+  <rect width="700" height="420" fill="#0a0f1a"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/>
+    </marker>
+  </defs>
+
+  <rect x="150" y="20" width="400" height="70" rx="8" fill="#111827" stroke="#0077b6" stroke-width="1.5"/>
+  <text x="350" y="48" text-anchor="middle" fill="#7dd3fc" font-size="13" font-weight="700">React 19 Frontend (Vite 7)</text>
+  <text x="350" y="66" text-anchor="middle" fill="#8b949e" font-size="10">Patient Portal / Doctor Dashboard / Hospital View</text>
+
+  <line x1="350" y1="90" x2="350" y2="126" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="440" y="112" text-anchor="middle" fill="#64748b" font-size="9">HMAC Bearer Token Auth</text>
+
+  <rect x="110" y="128" width="480" height="70" rx="8" fill="#111827" stroke="#0077b6" stroke-width="1.5"/>
+  <text x="350" y="156" text-anchor="middle" fill="#7dd3fc" font-size="13" font-weight="700">Node.js + Express 5 API</text>
+  <text x="350" y="174" text-anchor="middle" fill="#8b949e" font-size="9.5">/auth  /api/documents  /api/access-requests  /api/emergency-access  /api/ai/summarize</text>
+
+  <line x1="210" y1="198" x2="150" y2="246" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="198" x2="350" y2="246" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="490" y1="198" x2="550" y2="246" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="248" width="220" height="90" rx="8" fill="#111827" stroke="#30363d" stroke-width="1.5"/>
+  <text x="150" y="274" text-anchor="middle" fill="#e6edf3" font-size="12" font-weight="700">PostgreSQL</text>
+  <text x="150" y="292" text-anchor="middle" fill="#8b949e" font-size="10">10-table schema</text>
+  <text x="150" y="308" text-anchor="middle" fill="#8b949e" font-size="10">Full relational model</text>
+
+  <rect x="270" y="248" width="180" height="90" rx="8" fill="#111827" stroke="#30363d" stroke-width="1.5"/>
+  <text x="360" y="274" text-anchor="middle" fill="#e6edf3" font-size="12" font-weight="700">Appwrite / Local Disk</text>
+  <text x="360" y="292" text-anchor="middle" fill="#8b949e" font-size="10">Encrypted blob storage</text>
+  <text x="360" y="308" text-anchor="middle" fill="#8b949e" font-size="10">(automatic fallback)</text>
+
+  <rect x="460" y="248" width="200" height="90" rx="8" fill="#111827" stroke="#30363d" stroke-width="1.5"/>
+  <text x="560" y="274" text-anchor="middle" fill="#e6edf3" font-size="12" font-weight="700">Groq</text>
+  <text x="560" y="292" text-anchor="middle" fill="#8b949e" font-size="10">Llama 4 Scout (vision)</text>
+  <text x="560" y="308" text-anchor="middle" fill="#8b949e" font-size="10">Llama 3.3 70B (text)</text>
+
+  <text x="350" y="378" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="700">Request flow</text>
+  <text x="350" y="398" text-anchor="middle" fill="#64748b" font-size="10">Browser -&gt; React SPA -&gt; Express API -&gt; PostgreSQL / Appwrite / Groq -&gt; audit log -&gt; response</text>
+</svg>

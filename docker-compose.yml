@@ -1,0 +1,71 @@
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: medshield_postgres
+    environment:
+      POSTGRES_USER: medshield
+      POSTGRES_PASSWORD: medshield_secret
+      POSTGRES_DB: medshield
+    volumes:
+      - medshield_pgdata:/var/lib/postgresql/data
+      - ./db/migrations/0001_medshield_init.sql:/docker-entrypoint-initdb.d/01_init.sql
+      - ./db/migrations/0002_appwrite_storage.sql:/docker-entrypoint-initdb.d/02_appwrite.sql
+      - ./db/migrations/0003_hospital_proof_appwrite.sql:/docker-entrypoint-initdb.d/03_hospital_proof.sql
+      - ./db/migrations/0004_health_details.sql:/docker-entrypoint-initdb.d/04_health_details.sql
+      - ./db/migrations/0005_drug_interactions.sql:/docker-entrypoint-initdb.d/05_drug_interactions.sql
+      - ./db/migrations/0006_access_request_documents.sql:/docker-entrypoint-initdb.d/06_access_request_documents.sql
+    ports:
+      - "5435:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medshield -d medshield"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    image: node:20-alpine
+    container_name: medshield_api
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: sh -c "npm install && node server/src/index.js"
+    environment:
+      DATABASE_URL: postgresql://medshield:medshield_secret@postgres:5432/medshield
+      SESSION_SECRET: dev_session_secret_change_in_production
+      API_PORT: "3001"
+      API_HOST: "0.0.0.0"
+      ALLOWED_ORIGINS: "http://localhost:5177,http://localhost:5173"
+      NODE_ENV: development
+      # Appwrite — leave blank to run without file upload (local demo mode)
+      APPWRITE_ENDPOINT: ""
+      APPWRITE_PROJECT_ID: ""
+      APPWRITE_API_KEY: ""
+      APPWRITE_BUCKET_ID: medshield-documents
+      # Groq key for AI summarization (optional) — set GROQ_API_KEY in a local .env file, never commit it
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    image: node:20-alpine
+    container_name: medshield_frontend
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: sh -c "npm install && npx vite --host 0.0.0.0 --port 5177"
+    environment:
+      VITE_API_BASE_URL: "http://localhost:3001"
+      VITE_ENABLE_MOCK_AUTH: "false"
+    ports:
+      - "5177:5177"
+    depends_on:
+      - api
+
+volumes:
+  medshield_pgdata:
